@@ -1,60 +1,73 @@
 var dateToday = moment().format('dddd, MMM Do YYYY');
 $('#currentDay').html(dateToday);
 
+// let text = document.querySelector("data");
+// data.value = localStorage.getItem("data")
 
-$(document).ready(function () {
+timeTracker();
 
-    $(".savebtn").on("click", function () {
-        var text = $(this).siblings(".schedTime").val;
+setInterval(()=> {timeTracker()},60000);
+
+// $(document).ready(function () {
+
+    $(".saveBtn").on("click", function () {
+        var text = $(this).siblings(".description").val();
         var time = $(this).parent().attr("id");
+        console.log(text,time);
 
-        window.localStorage.setItem("time", "text");
+        var data =JSON.parse(localStorage.getItem("data")) || [];
+        var newData= {
+            id:time,
+            text:text,
+        }
+        data.push(newData);
+        window.localStorage.setItem("data",JSON.stringify(data));
+        // event.preventDefault();
     })
 
     function timeTracker() {
         var timeNow = moment().hour();
-
+  console.log("Current time", timeNow);
         $(".time-block").each(function () {
-            var blockTime = parseInt($(this).attr("id").split("hour")[1]);
-
+            var blockTime = $(this).attr("id");
+            console.log("blocktime", blockTime);
 
             if (blockTime < timeNow) {
-                $(this).removeClass("future");
-                $(this).removeClass("present");
+                // $(this).removeClass("future");
+                // $(this).removeClass("present");
                 $(this).addClass("past");
-            }else if (blockTime === timeNow) {
-                $(this).removeClass("past");
-                $(this).removeClass("future");
+            }else if (blockTime == timeNow) {
+                // $(this).removeClass("past");
+                // $(this).removeClass("future");
                 $(this).addClass("present");
             }else {
-                $(this).removeClass("present");
-                $(this).removeClass("past");
+                // $(this).removeClass("present");
+                // $(this).removeClass("past");
                 $(this).addClass("future");
             }
-
         });
 
-    }
+    // }
 
 
     // $('#tenAm').html(window.localStorage.getItem("time"));
-    $("#tenAm .description").val(localStorage.getItem("info", "time"));
-    $("#elevenAm .description").val(localStorage.getItem("elevenAm"));
-    $("#twelvepm .description").val(localStorage.getItem("twelvePm"));
-    $("#onePm .description").val(localStorage.getItem("onePm"));
-    $("#twoPm .description").val(localStorage.getItem("twoPm"));
-    $("#threePm .description").val(localStorage.getItem("threePm"));
-    $("#fourPm .description").val(localStorage.getItem("fourPm"));
-    $("#fivePm .description").val(localStorage.getItem("fivePm"));
-    $("#sixPm .description").val(localStorage.getItem("sixPm"));
-    $("#sevenPm .description").val(localStorage.getItem("sevenPm"));
-    $("#eightPm .description").val(localStorage.getItem("eightPm"));
-    $("#ninePm .description").val(localStorage.getItem("ninePm"));
-    $("#tenPm .description").val(localStorage.getItem("tenPm"));
-    $("#elevenPm .description").val(localStorage.getItem("elevenPm"));
+    // $("#10 .description").val(localStorage.getItem("data"));
+    // $("#11 .description").val(localStorage.getItem("data"));
+    // $("#12 .description").val(localStorage.getItem("data"));
+    // $("#13 .description").val(localStorage.getItem("data"));
+    // $("#14 .description").val(localStorage.getItem("data"));
+    // $("#15 .description").val(localStorage.getItem("data"));
+    // $("#16 .description").val(localStorage.getItem("data"));
+    // $("#17 .description").val(localStorage.getItem("data"));
+    // $("#18 .description").val(localStorage.getItem("data"));
+    // $("#19 .description").val(localStorage.getItem("data"));
+    // $("#20 .description").val(localStorage.getItem("data"));
+    // $("#21 .description").val(localStorage.getItem("data"));
+    // $("#22 .description").val(localStorage.getItem("data"));
+    // $("#23 .description").val(localStorage.getItem("data"));
 
 
 
-    timeTracker();
+    //timeTracker();
 
-})
+}
